@@ -5,11 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "dev": "nodemon -L"
-  },
-  "devDependencies":{
-    "nodemon": "^2.0.6"
+    "start": "node --watch index.js"
   },
   "author": "Priscilla Rojas",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@sequelize/mysql": "^7.0.0-alpha.41",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.3"
+  }
 }

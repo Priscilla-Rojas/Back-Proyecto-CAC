@@ -1,9 +1,11 @@
-const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
+const express = require('express');
+const app = express();
+const port = process.env.PORT || 3008;
 
-// Syncing all the models at once.
-conn.sync({ force: true }).then(() => {
-  server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
-  });
+app.get('/', (req, res)=>{
+  res.send('<h1>Hola Mundo</h1>')
+});
+
+app.listen(port, ()=>{
+  console.log(`**Servidor corriendo en el puerto ${port}**`)
 });
