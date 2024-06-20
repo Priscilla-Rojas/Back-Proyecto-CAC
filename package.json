@@ -5,13 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "node --watch index.js"
+    "start": "node --watch app.js"
   },
   "author": "Priscilla Rojas",
   "license": "ISC",
   "dependencies": {
     "@sequelize/mysql": "^7.0.0-alpha.41",
-    "express": "^4.19.2"
+    "express": "^4.19.2",
+    "mysql2": "^3.10.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.3"
