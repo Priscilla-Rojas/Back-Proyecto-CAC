@@ -1,73 +1,68 @@
 const express = require('express');
 const router = express.Router();
-const Reserva = require('../models/Reserva');
-
-// Crear una nueva reserva (Create)
-router.post('/', async (req, res) => {
-    try {
-        const { DNI_usuario, fecha, ID_turno_cancha, estado } = req.body;
-        const nuevaReserva = await Reserva.create({ DNI_usuario, fecha, ID_turno_cancha, estado });
-        res.status(201).json(nuevaReserva);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
+const connection = require('../../db')
 
 // Obtener todas las reservas (Read)
-router.get('/', async (req, res) => {
-    try {
-        const reservas = await Reserva.findAll();
-        res.json(reservas);
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
-});
-
-// Obtener una reserva por ID (Read)
-router.get('/:ID', async (req, res) => {
-    try {
-        const reserva = await Reserva.findByPk(req.params.ID);
-        if (reserva) {
-            res.json(reserva);
-        } else {
-            res.status(404).send('Reserva no encontrada');
+router.get('/', (req, res) => {
+    connection.query('SELECT * FROM reserva', (err, results) => {
+        if (err) {
+        res.status(500).send(err);
+        return;
         }
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
+        res.status(200).json(results);
+    });
+});
+// Obtener una reserva por ID (Read
+router.get('/:id', (req, res) => {
+    const { id } = req.params;
+    connection.query('SELECT * FROM reserva WHERE id = ?', [id], (err, results) => {
+        if (err) {
+        res.status(500).send(err);
+        return;
+        }
+        if (results.length === 0) {
+            res.status(404).send('Reserva no encontrada');
+            return;
+        }
+        res.status(200).json(results[0]);
+    });
+})
+// Crear una nueva reserva (Create)
+router.post('/', (req, res) => {
+    const { DNI_usuario, fecha, ID_turno_cancha, estado } = req.body;
+    connection.query('INSERT INTO reserva (DNI_usuario, fecha, ID_turno_cancha, estado) VALUES (?, ?, ?, ?)', [DNI_usuario, fecha, ID_turno_cancha, estado], (err, results) => {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+        console.log(results)
+        res.status(201).send(`La reserva: ${results.insertId} ha sido agregada`);
+        });
 });
 
 // Actualizar una reserva (Update)
-router.put('/:ID', async (req, res) => {
-    try {
-        const { DNI_usuario, fecha, ID_turno_cancha, estado } = req.body;
-        const [updated] = await Reserva.update(
-            { DNI_usuario, fecha, ID_turno_cancha, estado },
-            { where: { ID: req.params.ID } }
-        );
-        if (updated) {
-            const updatedReserva = await Reserva.findByPk(req.params.ID);
-            res.status(200).json(updatedReserva);
-        } else {
-            res.status(404).send('Reserva no encontrada');
+router.patch('/:id', (req, res) => {
+    const { id } = req.params;
+    const updates = req.body;
+    connection.query('UPDATE reserva SET ? WHERE id = ?', [updates, id], (err, results) => {
+        if (err) {
+            res.status(500).send(err);
+            return;
         }
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
+        res.status(200).send(`Cancha con ID: ${id} ha sido actualizada`);
+        });
 });
 
 // Eliminar una reserva (Delete)
-router.delete('/:ID', async (req, res) => {
-    try {
-        const deleted = await Reserva.destroy({ where: { ID: req.params.ID } });
-        if (deleted) {
-            res.status(204).send();
-        } else {
-            res.status(404).send('Reserva no encontrada');
+router.delete('/:id', (req, res) => {
+    const { id } = req.params;
+    connection.query('DELETE FROM reserva WHERE id = ?', [id], (err, results) => {
+        if (err) {
+            res.status(500).send(err);
+            return;
         }
-    } catch (error) {
-        res.status(500).send(error.message);
-    }
+        res.status(200).send(`Reserva con ID: ${id} ha sido eliminada`);
+        });
 });
 
 module.exports = router;
