@@ -6,7 +6,7 @@
     "test": "test",
     "start": "node --watch index.js"
   },
-  "author": "Priscilla Rojas",
+  "author": "",
   "license": "ISC",
   "dependencies": {
     "@sequelize/mysql": "^7.0.0-alpha.41",
