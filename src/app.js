@@ -1,21 +1,21 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
-const routes = require('./src/routes');
-const sequelize = require('./db');
+const usuariosRouter = require('../routes/usuarios');
+const canchaTurnosRouter = require('../routes/turnosCancha');
+const reservasRouter = require('../routes/reservas');
+const canchasRouter = require('../routes/canchas');
 
-// Middlewares
+const cors = require('cors');
+app.use(cors());
+
 app.use(express.json());
 
-// Routes
-app.use('/api', routes);
+app.use('/canchas', canchasRouter);
+app.use('/canchaTurnos', canchaTurnosRouter);
+// app.use('/usuarios', usuariosRouter)
+app.use('/reservas', reservasRouter);
 
-// Sincronización con la base de datos
-sequelize.sync()
-    .then(() => {
-        console.log('Base de datos sincronizada');
-    })
-    .catch(error => {
-        console.error('Error al sincronizar la base de datos:', error);
-    });
 
-module.exports = app;
+module.exports = app
