@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const connection = require('../../db')
+const connection = require('../db/db')
 
 // Obtener todas las reservas (Read)
 router.get('/', (req, res) => {
