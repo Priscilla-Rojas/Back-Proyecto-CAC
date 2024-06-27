@@ -1,9 +1,7 @@
-const express = require('express');
-const router = express.Router();
-const connection = require('../db/db')
+const connection = require('../db/db');
 
-router.get('/', (req, res) => {
-  connection.query(`
+const getAllTurnosCancha = (req, res) => {
+  const sql = `
     SELECT 
         c.id AS ID_CANCHA, 
         c.nombre AS NOMBRE_CANCHA, 
@@ -16,14 +14,14 @@ router.get('/', (req, res) => {
         turnos t ON ct.ID_turno = t.ID 
     GROUP BY 
         c.id, c.nombre;
-  `, (err, results) => {
+  `;
+  connection.query( sql, (err, results) => {
     if (err) {
       res.status(500).send(err);
       return;
     }
     res.status(200).json(results);
   });
-});
+}
 
-
-module.exports = router
+module.exports = getAllTurnosCancha;
