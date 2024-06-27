@@ -5,7 +5,11 @@ const getAllTurnosCancha = (req, res) => {
     SELECT 
         c.id AS ID_CANCHA, 
         c.nombre AS NOMBRE_CANCHA, 
+<<<<<<< HEAD
         JSON_ARRAYAGG(JSON_OBJECT('ID_TURNO', t.ID, 'TURNO_NOMBRE', t.nombre, 'TURNO_INICIO', t.inicio, 'TURNO_FIN', t.fin)) AS TURNOS 
+=======
+        JSON_ARRAYAGG(JSON_OBJECT('ID_TURNO', t.ID, 'TURNO_INICIO', t.inicio, 'TURNO_FIN', t.fin)) AS TURNOS 
+>>>>>>> 343c37b (Cambiando Estructura en Rama Daniela)
     FROM 
         Turno_Cancha ct 
     JOIN 
