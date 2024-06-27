@@ -14,8 +14,7 @@ app.use(express.json());
 
 app.use('/canchas', canchasRouter);
 app.use('/canchaTurnos', canchaTurnosRouter);
-// app.use('/usuarios', usuariosRouter)
+app.use('/usuarios', usuariosRouter);
 app.use('/reservas', reservasRouter);
 
-
-module.exports = app
+module.exports = app;
