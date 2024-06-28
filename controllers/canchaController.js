@@ -35,6 +35,7 @@ const createCancha = (req, res) => {
       res.status(500).send(err);
       return;
     }
+    
     res.status(201).send(`Cancha con ID: ${results.insertId} ha sido agregada`);
   });
 }
