@@ -1,7 +1,107 @@
 const connection = require('../db/db');
 
 const getAllReservas = (req, res) => {
-  const sql = 'SELECT * FROM reserva';
+  const sql = `
+    SELECT 
+    r.ID,
+    r.DNI_usuario,
+    r.fecha,
+    JSON_OBJECT(
+        'id_cancha', c.id,
+        'Nombre_cancha', c.nombre
+    ) AS cancha,
+    JSON_OBJECT(
+        'Id_turno', t.ID,
+        'Nombre_turno', t.nombre,
+        'Inicio', t.inicio,
+        'Fin', t.fin
+    ) AS turno,
+    r.estado
+    FROM 
+        reserva r
+    JOIN 
+        Turno_Cancha tc ON r.ID_Turno_Cancha = tc.ID
+    JOIN 
+        canchas c ON tc.ID_cancha = c.ID
+    JOIN 
+        turnos t ON tc.ID_turno = t.ID;
+  `;
+  connection.query( sql, (err, results) => {
+      if (err) {
+      res.status(500).send(err);
+      return;
+      }
+      res.status(200).json(results);
+  });
+}
+const getReservasOrderByDate = (req, res) => {
+  const sql = `
+    SELECT
+    r.fecha,
+    JSON_OBJECTAGG(
+        nombre_cancha,
+        JSON_ARRAYAGG(
+            JSON_OBJECT(
+                'Id_reserva', id_reserva,
+                'Estado', estado,
+                'DNI_usuario', DNI,
+                'Inicio', inicio,
+                'Fin', fin
+            )
+        )
+    ) AS Reservas
+FROM (
+    SELECT
+        r.fecha,
+        c.nombre AS nombre_cancha,
+        r.id,
+        r.estado,
+        u.DNI,
+        t.inicio,
+        t.fin
+    FROM
+        reserva r
+    JOIN
+        reserva r ON r.id
+    JOIN
+        canchas c ON c.ID
+    JOIN
+        usuario u ON u.DNI
+    JOIN
+        turnos t ON t.ID
+) AS subquery
+GROUP BY
+    fecha_reserva, nombre_cancha;
+  `;
+  // const sql = `
+  //   SELECT
+  //   r.fecha,
+  //   JSON_OBJECTAGG(
+  //     c.nombre,
+  //     JSON_ARRAYAGG(
+  //       JSON_OBJECT(
+  //         'Id_Reserva', r.id,
+  //         'Estado', r.estado,
+  //         'DNI_usuario', u.DNI,
+  //         'Inicio', t.inicio,
+  //         'Fin', t.fin
+  //       )
+  //     )
+  //   ) AS reservas
+  //   FROM
+  //       reserva r
+  //   JOIN
+  //       canchas c ON c.id
+  //   JOIN
+  //       usuario u ON u.DNI
+  //   JOIN
+  //       turnos t ON t.ID
+  //   GROUP BY
+  //       r.fecha;
+  // `;
+
+
+
   connection.query( sql, (err, results) => {
       if (err) {
       res.status(500).send(err);
@@ -67,6 +167,7 @@ const deleteReserva = (req, res) => {
 
 module.exports = {
   getAllReservas,
+  getReservasOrderByDate,
   getReservaById,
   createReserva,
   updateReserva,

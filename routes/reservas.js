@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const {
     getAllReservas,
+    getReservasOrderByDate,
     getReservaById,
     createReserva,
     updateReserva,
@@ -10,6 +11,8 @@ const {
 
 // Obtener todas las reservas (Read)
 router.get('/', getAllReservas);
+// Obtener todas las reservas (Read)
+router.get('/orderByDate', getReservasOrderByDate);
 // Obtener una reserva por ID (Read
 router.get('/:id', getReservaById)
 // Crear una nueva reserva (Create)
