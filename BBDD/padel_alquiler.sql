@@ -13,11 +13,11 @@ CREATE TABLE `usuario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Creacion de nuestros usuarios
-INSERT INTO `usuario` VALUES
+/* INSERT INTO `usuario` VALUES
     (12345671,'danybastias@outlook.com','Daniela Bastias','Padelera100%','https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png'),
     (12345672,'azulian093@gmail.com','Ariel A. Zulián','Padelero100%','https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png'),
     (12345673,'priscilla.k.rojas@hotmail.com','Priscilla Rojas','Padelera100%','https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png'),
-    (12345674,'adrian.bulacio.ab@hotmail.com','Adrián Bulacio','Padelero100%',	'https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png');
+    (12345674,'adrian.bulacio.ab@hotmail.com','Adrián Bulacio','Padelero100%',	'https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png'); */
 
 -- Tabla Canchas
 CREATE TABLE `canchas` (
