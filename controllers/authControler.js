@@ -4,10 +4,10 @@ const config = require('../config/config')
 const connection = require('../db/db');
 
 const register = (req, res)=>{
-  const { DNI, mail, nombre_completo, pass, foto} = req.body;
+  const { DNI, mail, nombre_completo, pass} = req.body;
   const password = bcrypt.hashSync( pass, 8);
-  const sql = 'INSERT INTO Usuario (DNI, mail, nombre_completo, password, foto) VALUES (?, ?, ?, ?, ?)';
-  connection.query(sql, [DNI, mail, nombre_completo, password, foto], (err, results) => {
+  const sql = 'INSERT INTO Usuario (DNI, mail, nombre_completo, password) VALUES (?, ?, ?, ?)';
+  connection.query(sql, [DNI, mail, nombre_completo, password], (err, results) => {
     if (err) {
       res.status(500).send(err);
       return;
@@ -31,8 +31,6 @@ const login = (req, res)=>{
           return;
       }
 
-      console.log(contraseña)
-      console.log(results[0])
       // console.log(results)
       const passwordValid = bcrypt.compareSync(contraseña, results[0].password);
       if (!passwordValid) return res.status(401).send({auth: false, token: null})

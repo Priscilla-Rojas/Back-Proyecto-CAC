@@ -10,7 +10,7 @@ CREATE TABLE `usuario` (
     `mail` VARCHAR(255) NOT NULL UNIQUE,
     `nombre_completo` VARCHAR(255) NOT NULL,
     `password` VARCHAR(255) NOT NULL,
-    `foto` VARCHAR(255) DEFAULT 'https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png'
+    `foto` VARCHAR(255) DEFAULT "https://w7.pngwing.com/pngs/81/570/png-transparent-profile-logo-computer-icons-user-user-blue-heroes-logo-thumbnail.png"
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Creacion de nuestros usuarios

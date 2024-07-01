@@ -123,8 +123,7 @@ const createReserva = (req, res) => {
             let sqlTurnoCancha = "SELECT ID FROM Turno_Cancha WHERE ID_turno = ? AND ID_cancha = ?";
             connection.query(sqlTurnoCancha, [resultsTurno[0].ID, resultsCancha[0].id], (err, resultsTC) => {
                 if (err) {
-                    console.error("Error al obtener ID de Turno_Cancha:", err);
-                    res.status(500).send("Error al obtener ID de Turno_Cancha");
+                    res.status(500).send({message:"Error al obtener ID de Turno_Cancha"});
                     return;
                 }
 
@@ -133,36 +132,19 @@ const createReserva = (req, res) => {
                 connection.query(
                     sqlReserva, [mail_usuario, fecha, resultsTC[0].ID, estado], (err, resultsReserva) => {
                         if (err) {
-                            console.error("Error al insertar reserva:", err);
-                            res.status(500).send("Error al insertar reserva");
+                            res.status(500).send({message:"Error al insertar reserva", err});
                             return;
-                        }
-                        console.log("Reserva insertada:", resultsReserva);
-                        res.status(201).send(`La reserva ${resultsReserva.insertId} ha sido agregada`);
+                        };
+                        res.status(201).send({
+                            message: `Reserva con id:${resultsReserva.insertId} ha sido agregada`,
+                            idReserva: resultsReserva.insertId,
+                        });
                     }
                 );
             });
         });
     });
 };
-
-
-// const createReserva = (req, res) => {
-//     const { fecha, nombreCancha, nombreTurno, estado, mail_usuario } = req.body;
-//     let sql = "INSERT INTO reserva (mail_usuario, fecha, ID_turno_cancha, estado) VALUES (?, ?, ?, ?)";
-//     connection.query(
-//         sql,
-//         [DNI_usuario, fecha, ID_turno_cancha, estado],
-//         (err, results) => {
-//             if (err) {
-//                 res.status(500).send(err);
-//                 return;
-//             }
-//             console.log(results);
-//             res.status(201).send(`La reserva: ${results.insertId} ha sido agregada`);
-//         }
-//     );
-// };
 
 const updateReserva = (req, res) => {
     const { id } = req.params;
@@ -185,7 +167,7 @@ const deleteReserva = (req, res) => {
             res.status(500).send(err);
             return;
         }
-        res.status(200).send(`Reserva con ID: ${id} ha sido eliminada`);
+        res.status(200).send({message: `Reserva con ID: ${id} ha sido eliminada`});
     });
 };
 
