@@ -16,6 +16,7 @@ const register = (req, res)=>{
     res.status(201).send({ auth: true, token });
   });
 }
+
 const login = (req, res)=>{
   const { mail, contraseña } = req.body;
   const sql = 'SELECT * FROM usuario WHERE mail = ?';
@@ -31,14 +32,16 @@ const login = (req, res)=>{
           return;
       }
 
-      // console.log(results)
+      console.log(results[0].DNI)
       const passwordValid = bcrypt.compareSync(contraseña, results[0].password);
       if (!passwordValid) return res.status(401).send({auth: false, token: null})
       const token = jwt.sign( 
         {
           foto: results[0].foto,
           mail: results[0].mail,
-          nombre_completo:results[0].nombre_completo 
+          nombre_completo:results[0].nombre_completo,
+          dni: results[0].DNI,
+          password: contraseña,
         },
         config.secretKey,
         { expiresIn: config.tokenExpiresIn });
