@@ -80,6 +80,14 @@ CREATE TABLE `reserva` (
     FOREIGN KEY (`ID_turno_cancha`) REFERENCES `Turno_Cancha`(`ID`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE EVENT actualizar_reservas_cumplidas
+ON SCHEDULE EVERY 1 DAY
+STARTS CURRENT_TIMESTAMP
+DO
+    UPDATE reserva
+    SET estado = 'Cumplido'
+    WHERE fecha < CURDATE() AND estado <> 'Cancelado';
+
 -- Insertar Reservas Demos
 INSERT INTO `reserva` (`mail_usuario`, `fecha`, `ID_turno_cancha`, `estado`) 
 VALUES

@@ -4,6 +4,7 @@ const {
     getAllReservas,
     getReservasOrderByDate,
     getReservaById,
+    getReservaByUser,
     createReserva,
     updateReserva,
     deleteReserva
@@ -15,6 +16,7 @@ router.get('/', getAllReservas);
 router.get('/orderByDate', getReservasOrderByDate);
 // Obtener una reserva por ID (Read
 router.get('/:id', getReservaById)
+router.get('/user/:mail_usuario', getReservaByUser)
 // Crear una nueva reserva (Create)
 router.post('/', createReserva);
 

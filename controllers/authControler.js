@@ -31,8 +31,6 @@ const login = (req, res)=>{
           res.status(404).send('usuario no encontrado');
           return;
       }
-
-      console.log(results[0].DNI)
       const passwordValid = bcrypt.compareSync(contraseña, results[0].password);
       if (!passwordValid) return res.status(401).send({auth: false, token: null})
       const token = jwt.sign( 

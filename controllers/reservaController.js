@@ -82,6 +82,26 @@ const getReservasOrderByDate = (req, res) => {
     });
 };
 
+const getReservaByUser = (req, res) => {
+    const { mail_usuario } = req.params;
+    const sql = "SELECT R.*, C.nombre AS nombre_cancha, T.nombre AS nombre_turno, T.inicio AS inicio_turno, T.fin AS fin_turno FROM reserva AS R " +
+            "JOIN Turno_Cancha AS TC ON R.ID_turno_cancha = TC.ID " +
+            "JOIN canchas AS C ON TC.ID_cancha = C.id " +
+            "JOIN turnos AS T ON TC.ID_turno = T.ID " +
+            "WHERE R.mail_usuario = ?";
+    // const sql = "SELECT * FROM reserva WHERE mail_usuario = ?";
+    connection.query(sql, [mail_usuario], (err, results) => {
+        if (err) {
+            res.status(500).send(err);
+            return;
+        }
+        if (results.length === 0) {
+            res.status(404).send({message:"Reserva no encontrada"});
+            return;
+        }
+        res.status(200).json(results);
+    });
+};
 const getReservaById = (req, res) => {
     const { id } = req.params;
     const sql = "SELECT * FROM reserva WHERE id = ?";
@@ -91,7 +111,7 @@ const getReservaById = (req, res) => {
             return;
         }
         if (results.length === 0) {
-            res.status(404).send("Reserva no encontrada");
+            res.status(404).send("Reserva no encontrada**");
             return;
         }
         res.status(200).json(results[0]);
@@ -175,6 +195,7 @@ module.exports = {
     getAllReservas,
     getReservasOrderByDate,
     getReservaById,
+    getReservaByUser,
     createReserva,
     updateReserva,
     deleteReserva,
