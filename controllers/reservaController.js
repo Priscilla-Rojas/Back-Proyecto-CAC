@@ -2,6 +2,7 @@ const connection = require('../db/db');
 
 const getAllReservas = (req, res) => {
 <<<<<<< HEAD
+<<<<<<< HEAD
   const sql = `
     SELECT 
     r.ID,
@@ -106,6 +107,9 @@ GROUP BY
 =======
   const sql = 'SELECT * FROM reserva';
 >>>>>>> 343c37b (Cambiando Estructura en Rama Daniela)
+=======
+  const sql = 'SELECT * FROM reserva';
+>>>>>>> 39843acb3a6ecd65cb29a5b026ad6edc49ed53cb
   connection.query( sql, (err, results) => {
       if (err) {
       res.status(500).send(err);
@@ -172,9 +176,12 @@ const deleteReserva = (req, res) => {
 module.exports = {
   getAllReservas,
 <<<<<<< HEAD
+<<<<<<< HEAD
   getReservasOrderByDate,
 =======
 >>>>>>> 343c37b (Cambiando Estructura en Rama Daniela)
+=======
+>>>>>>> 39843acb3a6ecd65cb29a5b026ad6edc49ed53cb
   getReservaById,
   createReserva,
   updateReserva,

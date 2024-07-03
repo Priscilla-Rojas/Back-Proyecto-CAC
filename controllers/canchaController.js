@@ -31,18 +31,24 @@ const createCancha = (req, res) => {
   const { nombre, material, cubierta } = req.body;
   const sql = 'INSERT INTO canchas (nombre, material, cubierta) VALUES (?, ?, ?)';
 <<<<<<< HEAD
+<<<<<<< HEAD
   
 =======
 >>>>>>> 343c37b (Cambiando Estructura en Rama Daniela)
+=======
+>>>>>>> 39843acb3a6ecd65cb29a5b026ad6edc49ed53cb
   connection.query( sql, [nombre, material, cubierta], (err, results) => {
     if (err) {
       res.status(500).send(err);
       return;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 343c37b (Cambiando Estructura en Rama Daniela)
+=======
+>>>>>>> 39843acb3a6ecd65cb29a5b026ad6edc49ed53cb
     res.status(201).send(`Cancha con ID: ${results.insertId} ha sido agregada`);
   });
 }

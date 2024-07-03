@@ -6,10 +6,14 @@ const getAllTurnosCancha = (req, res) => {
         c.id AS ID_CANCHA, 
         c.nombre AS NOMBRE_CANCHA, 
 <<<<<<< HEAD
+<<<<<<< HEAD
         JSON_ARRAYAGG(JSON_OBJECT('ID_TURNO', t.ID, 'TURNO_NOMBRE', t.nombre, 'TURNO_INICIO', t.inicio, 'TURNO_FIN', t.fin)) AS TURNOS 
 =======
         JSON_ARRAYAGG(JSON_OBJECT('ID_TURNO', t.ID, 'TURNO_INICIO', t.inicio, 'TURNO_FIN', t.fin)) AS TURNOS 
 >>>>>>> 343c37b (Cambiando Estructura en Rama Daniela)
+=======
+        JSON_ARRAYAGG(JSON_OBJECT('ID_TURNO', t.ID, 'TURNO_INICIO', t.inicio, 'TURNO_FIN', t.fin)) AS TURNOS 
+>>>>>>> 39843acb3a6ecd65cb29a5b026ad6edc49ed53cb
     FROM 
         Turno_Cancha ct 
     JOIN 
