@@ -175,7 +175,7 @@ const updateReserva = (req, res) => {
             res.status(500).send(err);
             return;
         }
-        res.status(200).send(`Cancha con ID: ${id} ha sido actualizada`);
+        res.status(200).send({message:`Reserva con ID: ${id} ha sido actualizada`});
     });
 };
 

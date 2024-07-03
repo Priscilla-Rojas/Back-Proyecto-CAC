@@ -49,9 +49,30 @@ const login = (req, res)=>{
   });
 }
 
+const updateUsername = (req, res) => {
+  const { token, newUsername, mail } = req.body;
 
+  try {
+    const decodedToken = jwt.verify(token, config.secretKey);
+
+    if (decodedToken.mail !== mail) {
+      return res.status(403).send({message:'No tienes permisos para modificar este usuario'});
+    }
+    const sql = 'UPDATE usuario SET nombre_completo = ? WHERE mail = ?';
+    connection.query( sql, [newUsername, decodedToken.mail], (error, results) => {
+      // console.log(results)
+      if (error) {
+        return res.status(500).send(error);
+      }
+      res.status(200).send({message: 'Nombre de usuario actualizado correctamente', results});
+    });
+  } catch (error) {
+    res.status(401).send('Token inválido');
+  }
+}
 
 module.exports= {
   register,
-  login
+  login,
+  updateUsername
 }
