@@ -30,11 +30,13 @@ const getCanchaById = (req, res) => {
 const createCancha = (req, res) => {
   const { nombre, material, cubierta } = req.body;
   const sql = 'INSERT INTO canchas (nombre, material, cubierta) VALUES (?, ?, ?)';
+  
   connection.query( sql, [nombre, material, cubierta], (err, results) => {
     if (err) {
       res.status(500).send(err);
       return;
     }
+
     res.status(201).send(`Cancha con ID: ${results.insertId} ha sido agregada`);
   });
 }
